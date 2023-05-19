@@ -1,14 +1,16 @@
+/* eslint-disable prettier/prettier */
 import { Module } from '@nestjs/common';
-import { TypeOrmModule } from '@nestjs/typeorm';
+import { FooResolver } from './resolvers/app.resolver';
+// import { TypeOrmModule } from '@nestjs/typeorm';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([
+    // TypeOrmModule.forFeature([
       // Entities go here
-    ]),
+    // ]),
   ],
   providers: [
-    // Services & Resolvers go here
+    FooResolver
   ],
 })
 export class ApiModule {}
