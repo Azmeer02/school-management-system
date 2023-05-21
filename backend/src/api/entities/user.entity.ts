@@ -1,12 +1,12 @@
 /* eslint-disable prettier/prettier */
 import { Field, ObjectType, HideField } from '@nestjs/graphql';
-import { Column, Entity } from 'typeorm';
+import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 import { UserType } from '../model';
 
 @Entity()
 @ObjectType()
 export class SmsUser {
-  @Column({ unique: true, primary: true, generated: true })
+  @PrimaryGeneratedColumn()
   @Field()
   id: number;
 
@@ -29,4 +29,12 @@ export class SmsUser {
   @Column()
   @Field()
   userType: UserType;
+
+  @Column()
+  @Field()
+  createdAt: Date;
+
+  @Column()
+  @Field()
+  updatedAt: Date;
 }

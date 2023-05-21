@@ -1,14 +1,13 @@
 /* eslint-disable prettier/prettier */
 import { Field, ObjectType } from '@nestjs/graphql';
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
-import { SmsSchoolClass } from './class.entity';
+import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
 @ObjectType()
-export class SmsSchool {
+export class SmsClassStudent {
   @PrimaryGeneratedColumn()
   @Field()
-  schoolId: number;
+  studentId: number;
 
   @Column()
   @Field()
@@ -16,18 +15,19 @@ export class SmsSchool {
 
   @Column()
   @Field()
-  address: string;
-
-  @Column()
-  @Field()
-  contactNumber: number;
-
-  @OneToMany(() => SmsSchoolClass, (schoolClass) => schoolClass.school)
-  classes: SmsSchoolClass[];
+  rollNumber: number;
 
   @Column()
   @Field()
   email: string;
+
+  @Column()
+  @Field({ nullable: true})
+  phoneNumber: number;
+  
+  @Column()
+  @Field()
+  address: string;
 
   @Column()
   @Field()
