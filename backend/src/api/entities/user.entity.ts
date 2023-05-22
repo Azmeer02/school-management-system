@@ -1,6 +1,11 @@
 /* eslint-disable prettier/prettier */
 import { Field, ObjectType, HideField } from '@nestjs/graphql';
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 import { UserType } from '../model';
 
 @Entity()
@@ -30,11 +35,14 @@ export class SmsUser {
   @Field()
   userType: UserType;
 
-  @Column()
+  @CreateDateColumn({ default: () => 'CURRENT_TIMESTAMP' })
   @Field()
   createdAt: Date;
 
-  @Column()
+  @CreateDateColumn({
+    default: () => 'CURRENT_TIMESTAMP',
+    onUpdate: 'CURRENT_TIMESTAMP',
+  })
   @Field()
   updatedAt: Date;
 }

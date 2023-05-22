@@ -1,6 +1,13 @@
 /* eslint-disable prettier/prettier */
 import { Field, ObjectType } from '@nestjs/graphql';
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
+import { SmsSchoolClass } from './class.entity';
 
 @Entity()
 @ObjectType()
@@ -22,18 +29,24 @@ export class SmsClassStudent {
   email: string;
 
   @Column()
-  @Field({ nullable: true})
+  @Field({ nullable: true })
   phoneNumber: number;
-  
+
   @Column()
   @Field()
   address: string;
 
-  @Column()
-  @Field()
-  createdAt: Date;
+  @ManyToOne(() => SmsSchoolClass, (classStudent) => classStudent.students)
+  class: SmsSchoolClass;
 
-  @Column()
+  @CreateDateColumn({ default: () => 'CURRENT_TIMESTAMP' })
   @Field()
-  updatedAt: Date;
+  logCreatedAt: Date;
+
+  @CreateDateColumn({
+    default: () => 'CURRENT_TIMESTAMP',
+    onUpdate: 'CURRENT_TIMESTAMP',
+  })
+  @Field()
+  logUpdatedAt: Date;
 }
