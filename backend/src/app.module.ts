@@ -3,9 +3,9 @@ import * as dotenv from 'dotenv';
 import { Module } from '@nestjs/common';
 import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
-// import { ApiModule } from './api/api.module';
-import { FooResolver } from './api/resolvers/user.resolver';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { AuthModule } from './auth/auth.module';
+import { ApiModule } from './api/api.module';
 
 dotenv.config();
 
@@ -15,6 +15,7 @@ dotenv.config();
       driver: ApolloDriver,
       playground: true,
       autoSchemaFile: 'schema.gql',
+      context: ({ req }) => ({ ...req }),
     }),
     TypeOrmModule.forRoot({
       type: 'postgres',
@@ -26,8 +27,10 @@ dotenv.config();
       entities: [__dirname + '/**/entities/*{.ts,.js}'],
       synchronize: true,
     }),
+    AuthModule,
+    ApiModule,
   ],
   controllers: [],
-  providers: [FooResolver],
+  providers: [],
 })
 export class AppModule {}
