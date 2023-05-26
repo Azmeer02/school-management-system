@@ -57,13 +57,16 @@ export class AuthService {
     user.password = await this.hashPassword(userInput.password);
     user.firstname = userInput.firstname;
     user.lastname = userInput.lastname;
+    user.phoneNumber = userInput.phoneNumber ? userInput.phoneNumber : null;
     user.userType = userInput.userType;
 
     const createdUser = await this.userRepository.save(user);
 
     const payload = { userId: createdUser.id };
 
-    return this.jwtService.sign(payload);
+    return this.jwtService.sign(payload, {
+      secret: process.env.JWT_SECRET,
+    });
   }
 
   async hashPassword(password: string): Promise<string> {

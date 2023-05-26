@@ -31,6 +31,10 @@ export class SmsUser {
   @HideField()
   password: string;
 
+  @Column({ nullable: true })
+  @Field()
+  phoneNumber: string;
+
   @Column()
   @Field()
   userType: UserType;

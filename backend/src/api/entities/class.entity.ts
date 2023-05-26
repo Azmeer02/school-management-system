@@ -22,6 +22,9 @@ export class SmsSchoolClass {
   @Field()
   name: string;
 
+  @Column({ name: 'school_id' })
+  schoolId: number;
+
   @ManyToOne(() => SmsSchool, (schoolClass) => schoolClass.classes)
   school: SmsSchool;
 

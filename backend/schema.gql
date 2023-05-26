@@ -7,6 +7,7 @@ type SmsUser {
   firstname: String!
   lastname: String!
   email: String!
+  phoneNumber: String!
   userType: String!
   createdAt: DateTime!
   updatedAt: DateTime!
@@ -17,13 +18,39 @@ A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date
 """
 scalar DateTime
 
+type SmsSchoolClass {
+  classId: Float!
+  name: String!
+  logCreatedAt: DateTime!
+  logUpdatedAt: DateTime!
+}
+
+type SmsSchool {
+  schoolId: Float!
+  name: String!
+  address: String!
+  contactNumber: Float!
+  email: String!
+  logCreatedAt: DateTime!
+  logUpdatedAt: DateTime!
+  classes: [SmsSchoolClass!]!
+}
+
 type Query {
   getAllUsers: [SmsUser!]!
+  getUserById(id: Float!): SmsUser!
+  getAllSchools: [SmsSchool!]!
+  getSchoolById(id: Float!): SmsSchool!
 }
 
 type Mutation {
   signup(signupInput: UserSignUpInput!): String!
   login(loginInput: LoginInput!): String!
+  updateUser(id: Float!, input: UserUpdateInput!): SmsUser!
+  deleteUser(id: Float!): Boolean!
+  createSchool(input: CreateSchoolInput!): SmsSchool!
+  updateSchool(id: Float!, input: UpdateSchoolInput!): SmsSchool!
+  deleteSchool(id: Float!): Boolean!
 }
 
 input UserSignUpInput {
@@ -38,4 +65,25 @@ input UserSignUpInput {
 input LoginInput {
   email: String!
   password: String!
+}
+
+input UserUpdateInput {
+  email: String
+  firstname: String
+  lastname: String
+  phoneNumber: String
+}
+
+input CreateSchoolInput {
+  name: String!
+  address: String!
+  phoneNumber: Float!
+  email: String!
+}
+
+input UpdateSchoolInput {
+  name: String
+  address: String
+  phoneNumber: Float
+  email: String
 }

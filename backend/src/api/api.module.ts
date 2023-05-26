@@ -8,6 +8,8 @@ import { SmsSchoolClass } from './entities/class.entity';
 import { SmsClassStudent } from './entities/student.entity';
 import { UserService } from './services/user.service';
 import { AuthModule } from 'src/auth/auth.module';
+import { SchoolService } from './services/school.service';
+import { SchoolResolver } from './resolvers/school.resolver';
 
 @Module({
   imports: [
@@ -19,6 +21,6 @@ import { AuthModule } from 'src/auth/auth.module';
       SmsClassStudent,
     ]),
   ],
-  providers: [UserResolver, UserService],
+  providers: [UserResolver, UserService, SchoolService, SchoolResolver],
 })
 export class ApiModule {}
