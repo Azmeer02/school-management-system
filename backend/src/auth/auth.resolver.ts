@@ -16,7 +16,7 @@ export class AuthResolver {
     return token;
   }
 
-  @Mutation(() => String)
+  @Mutation(() => LoginOutput)
   async login(
     @Args('loginInput') loginInput: LoginInput,
   ): Promise<LoginOutput> {
