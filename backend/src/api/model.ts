@@ -7,7 +7,6 @@ export enum UserType {
   TEACHER = 'TEACHER',
   ADMIN = 'ADMIN',
 }
-
 @InputType()
 export class UserUpdateInput {
   @Field({ nullable: true })
@@ -22,7 +21,6 @@ export class UserUpdateInput {
   @Field({ nullable: true })
   phoneNumber: string;
 }
-
 @InputType()
 export class UserSignUpInput {
   @Field()
@@ -43,7 +41,6 @@ export class UserSignUpInput {
   @Field()
   userType: UserType;
 }
-
 @InputType()
 export class LoginInput {
   @Field()
@@ -52,22 +49,6 @@ export class LoginInput {
   @Field()
   password: string;
 }
-
-@ObjectType()
-export class LoginOutput {
-  @Field({ nullable: false })
-  access_token: string;
-}
-
-@ObjectType('status')
-export class OperationStatus {
-  @Field({ nullable: false })
-  status: string;
-
-  @Field({ nullable: false })
-  msg: string;
-}
-
 @InputType()
 export class CreateSchoolInput {
   @Field()
@@ -95,4 +76,28 @@ export class UpdateSchoolInput {
 
   @Field({ nullable: true })
   email: string;
+}
+@InputType()
+export class CreateClassInput {
+  @Field()
+  name: string;
+}
+@InputType()
+export class UpdateClassInput {
+  @Field()
+  name: string;
+}
+@ObjectType()
+export class LoginOutput {
+  @Field({ nullable: false })
+  access_token: string;
+}
+
+@ObjectType('status')
+export class OperationStatus {
+  @Field({ nullable: false })
+  status: string;
+
+  @Field({ nullable: false })
+  msg: string;
 }
