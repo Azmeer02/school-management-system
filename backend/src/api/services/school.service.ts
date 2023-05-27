@@ -107,7 +107,7 @@ export class SchoolService {
   async getClassesBySchoolId(schoolId: number): Promise<SmsSchoolClass[]> {
     return await this.classRepository
       .createQueryBuilder('class')
-      .where('class.schoolId = :schoolId', { schoolId })
+      .where('class.school.schoolId = :schoolId', { schoolId })
       .getMany();
   }
 }

@@ -57,9 +57,11 @@ type Mutation {
   updateUser(id: Float!, input: UserUpdateInput!): SmsUser!
   deleteUser(id: Float!): Boolean!
   createSchool(input: CreateSchoolInput!): SmsSchool!
-  updateSchool(id: Float!, input: UpdateClassInput!): SmsSchoolClass!
+  updateSchool(id: Float!, input: UpdateSchoolInput!): SmsSchool!
   deleteSchool(id: Float!): Boolean!
   createClass(input: CreateClassInput!): SmsSchoolClass!
+  updateClass(id: Float!, input: UpdateClassInput!): SmsSchoolClass!
+  deleteClass(id: Float!): Boolean!
 }
 
 input UserSignUpInput {
@@ -92,10 +94,18 @@ input CreateSchoolInput {
   email: String!
 }
 
-input UpdateClassInput {
-  name: String!
+input UpdateSchoolInput {
+  name: String
+  address: String
+  phoneNumber: String
+  email: String
 }
 
 input CreateClassInput {
+  name: String!
+  schoolId: Float!
+}
+
+input UpdateClassInput {
   name: String!
 }

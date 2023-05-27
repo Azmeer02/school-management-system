@@ -4,6 +4,7 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  JoinColumn,
   ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
@@ -22,10 +23,8 @@ export class SmsSchoolClass {
   @Field()
   name: string;
 
-  @Column({ name: 'school_id' })
-  schoolId: number;
-
-  @ManyToOne(() => SmsSchool, (schoolClass) => schoolClass.classes)
+  @ManyToOne(() => SmsSchool, (school) => school.classes)
+  @JoinColumn({ name: 'schoolId' })
   school: SmsSchool;
 
   @OneToMany(() => SmsClassStudent, (classStudent) => classStudent.class)

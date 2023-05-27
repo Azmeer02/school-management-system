@@ -15,13 +15,30 @@ export class ClassService {
     private classRepository: Repository<SmsSchoolClass>,
   ) {}
 
+  // async getAllClasses(): Promise<SmsSchoolClass[]> {
+  //   return await this.classRepository.find();
+  // }
+
+  // async getClassById(id: number): Promise<SmsSchoolClass> {
+  //   const smsClass = await this.classRepository.findOne({
+  //     where: { classId: id },
+  //   });
+
+  //   if (!smsClass) {
+  //     throw new Error('Class not found');
+  //   }
+
+  //   return smsClass;
+  // }
+
   async getAllClasses(): Promise<SmsSchoolClass[]> {
-    return await this.classRepository.find();
+    return await this.classRepository.find({ relations: ['school'] });
   }
 
   async getClassById(id: number): Promise<SmsSchoolClass> {
     const smsClass = await this.classRepository.findOne({
       where: { classId: id },
+      relations: ['school'],
     });
 
     if (!smsClass) {
@@ -32,9 +49,18 @@ export class ClassService {
   }
 
   async createClass(classData: CreateClassInput): Promise<SmsSchoolClass> {
+    const school = await this.schoolRepository.findOne({
+      where: { schoolId: classData.schoolId },
+    });
+
+    if (!school) {
+      throw new Error('School not found');
+    }
+
     const smsClass = new SmsSchoolClass();
 
     smsClass.name = classData.name;
+    smsClass.school = school;
 
     return await this.classRepository.save(smsClass);
   }
@@ -80,9 +106,5 @@ export class ClassService {
         msg: 'No records deleted',
       };
     }
-  }
-
-  async getSchoolById(schoolId: number): Promise<SmsSchool> {
-    return await this.schoolRepository.findOne({ where: { schoolId } });
   }
 }

@@ -4,13 +4,14 @@ import {
   Query,
   Mutation,
   Args,
-  Parent,
   ResolveField,
+  Parent,
 } from '@nestjs/graphql';
-import { SmsSchool } from '../entities/school.entity';
+// import { SmsSchool } from '../entities/school.entity';
 import { CreateClassInput, UpdateClassInput } from '../model';
 import { SmsSchoolClass } from '../entities/class.entity';
 import { ClassService } from '../services/class.service';
+import { SmsSchool } from '../entities/school.entity';
 
 @Resolver(() => SmsSchoolClass)
 export class ClassResolver {
@@ -34,7 +35,7 @@ export class ClassResolver {
   }
 
   @Mutation(() => SmsSchoolClass)
-  async updateSchool(
+  async updateClass(
     @Args('id') id: number,
     @Args('input') data: UpdateClassInput,
   ): Promise<SmsSchoolClass> {
@@ -42,14 +43,13 @@ export class ClassResolver {
   }
 
   @Mutation(() => Boolean)
-  async deleteSchool(@Args('id') id: number): Promise<boolean> {
+  async deleteClass(@Args('id') id: number): Promise<boolean> {
     await this.classService.deleteClass(id);
     return true;
   }
 
   @ResolveField(() => SmsSchool)
   async school(@Parent() smsClass: SmsSchoolClass): Promise<SmsSchool> {
-    const schoolId = smsClass.schoolId;
-    return await this.classService.getSchoolById(schoolId);
+    return smsClass.school;
   }
 }

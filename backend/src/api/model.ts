@@ -87,6 +87,9 @@ export class UpdateSchoolInput {
 export class CreateClassInput {
   @Field()
   name: string;
+
+  @Field()
+  schoolId: number;
 }
 @InputType()
 export class UpdateClassInput {
