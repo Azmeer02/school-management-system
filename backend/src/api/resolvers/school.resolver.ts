@@ -18,19 +18,19 @@ export class SchoolResolver {
 
   @Query(() => [SmsSchool])
   async getAllSchools(): Promise<SmsSchool[]> {
-    return this.schoolService.getAllSchools();
+    return await this.schoolService.getAllSchools();
   }
 
   @Query(() => SmsSchool)
   async getSchoolById(@Args('id') id: number): Promise<SmsSchool> {
-    return this.schoolService.getSchoolById(id);
+    return await this.schoolService.getSchoolById(id);
   }
 
   @Mutation(() => SmsSchool)
   async createSchool(
     @Args('input') data: CreateSchoolInput,
   ): Promise<SmsSchool> {
-    return this.schoolService.createSchool(data);
+    return await this.schoolService.createSchool(data);
   }
 
   @Mutation(() => SmsSchool)
@@ -38,7 +38,7 @@ export class SchoolResolver {
     @Args('id') id: number,
     @Args('input') data: UpdateSchoolInput,
   ): Promise<SmsSchool> {
-    return this.schoolService.updateSchool(id, data);
+    return await this.schoolService.updateSchool(id, data);
   }
 
   @Mutation(() => Boolean)

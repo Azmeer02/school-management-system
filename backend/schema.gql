@@ -15,6 +15,7 @@ type SmsUser {
   userType: String!
   createdAt: DateTime!
   updatedAt: DateTime!
+  school: SmsSchool
 }
 
 """
@@ -27,13 +28,14 @@ type SmsSchoolClass {
   name: String!
   logCreatedAt: DateTime!
   logUpdatedAt: DateTime!
+  school: SmsSchool!
 }
 
 type SmsSchool {
   schoolId: Float!
   name: String!
   address: String!
-  contactNumber: Float!
+  contactNumber: String!
   email: String!
   logCreatedAt: DateTime!
   logUpdatedAt: DateTime!
@@ -45,6 +47,8 @@ type Query {
   getUserById(id: Float!): SmsUser!
   getAllSchools: [SmsSchool!]!
   getSchoolById(id: Float!): SmsSchool!
+  getAllClasses: [SmsSchoolClass!]!
+  getClassById(id: Float!): SmsSchoolClass!
 }
 
 type Mutation {
@@ -53,8 +57,9 @@ type Mutation {
   updateUser(id: Float!, input: UserUpdateInput!): SmsUser!
   deleteUser(id: Float!): Boolean!
   createSchool(input: CreateSchoolInput!): SmsSchool!
-  updateSchool(id: Float!, input: UpdateSchoolInput!): SmsSchool!
+  updateSchool(id: Float!, input: UpdateClassInput!): SmsSchoolClass!
   deleteSchool(id: Float!): Boolean!
+  createClass(input: CreateClassInput!): SmsSchoolClass!
 }
 
 input UserSignUpInput {
@@ -64,6 +69,8 @@ input UserSignUpInput {
   lastname: String!
   phoneNumber: String
   userType: String!
+  schoolName: String
+  schoolAddress: String
 }
 
 input LoginInput {
@@ -81,13 +88,14 @@ input UserUpdateInput {
 input CreateSchoolInput {
   name: String!
   address: String!
-  phoneNumber: Float!
+  phoneNumber: String!
   email: String!
 }
 
-input UpdateSchoolInput {
-  name: String
-  address: String
-  phoneNumber: Float
-  email: String
+input UpdateClassInput {
+  name: String!
+}
+
+input CreateClassInput {
+  name: String!
 }

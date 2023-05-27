@@ -24,9 +24,9 @@ export class SmsSchool {
   @Field()
   address: string;
 
-  @Column()
+  @Column({ nullable: true })
   @Field()
-  contactNumber: number;
+  contactNumber: string;
 
   @OneToMany(() => SmsSchoolClass, (schoolClass) => schoolClass.school)
   classes: SmsSchoolClass[];

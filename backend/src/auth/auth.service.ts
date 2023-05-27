@@ -5,8 +5,14 @@ import { JwtService } from '@nestjs/jwt';
 import { compare, genSalt, hash } from 'bcrypt';
 import { Repository } from 'typeorm';
 import { SmsUser } from 'src/api/entities/user.entity';
-import { LoginOutput, UserSignUpInput } from 'src/api/model';
+import {
+  CreateSchoolInput,
+  LoginOutput,
+  UserSignUpInput,
+  UserType,
+} from 'src/api/model';
 import { InjectRepository } from '@nestjs/typeorm';
+import { SchoolService } from 'src/api/services/school.service';
 
 dotenv.config();
 
@@ -15,6 +21,7 @@ export class AuthService {
   constructor(
     @InjectRepository(SmsUser)
     private userRepository: Repository<SmsUser>,
+    private schoolService: SchoolService,
     private jwtService: JwtService,
   ) {}
 
@@ -60,7 +67,24 @@ export class AuthService {
     user.phoneNumber = userInput.phoneNumber ? userInput.phoneNumber : null;
     user.userType = userInput.userType;
 
-    const createdUser = await this.userRepository.save(user);
+    let createdUser: SmsUser;
+
+    if (userInput.userType === UserType.SCHOOL) {
+      const schoolData: CreateSchoolInput = {
+        name: userInput.schoolName,
+        email: userInput.email,
+        phoneNumber: userInput.phoneNumber,
+        address: userInput.schoolAddress,
+      };
+
+      // const school = await this.schoolService.createSchool(schoolData);
+      const school = await this.schoolService.createSchool(schoolData);
+      user.schoolId = school.schoolId;
+
+      createdUser = await this.userRepository.save(user);
+    } else {
+      createdUser = await this.userRepository.save(user);
+    }
 
     const payload = { userId: createdUser.id };
 

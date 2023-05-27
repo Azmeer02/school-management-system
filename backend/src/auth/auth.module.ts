@@ -8,6 +8,9 @@ import { AuthService } from './auth.service';
 import { ApiModule } from 'src/api/api.module';
 import { JwtModule, JwtService } from '@nestjs/jwt';
 import { JwtStrategy } from './strategy/jwt.strategy';
+import { SmsSchool } from 'src/api/entities/school.entity';
+import { SchoolService } from 'src/api/services/school.service';
+import { SmsSchoolClass } from 'src/api/entities/class.entity';
 
 dotenv.config();
 
@@ -19,9 +22,15 @@ dotenv.config();
       secret: process.env.JWT_SECRET,
       signOptions: { expiresIn: '1h' },
     }),
-    TypeOrmModule.forFeature([SmsUser]),
+    TypeOrmModule.forFeature([SmsUser, SmsSchool, SmsSchoolClass]),
   ],
   exports: [JwtModule],
-  providers: [AuthResolver, AuthService, JwtService, JwtStrategy],
+  providers: [
+    AuthResolver,
+    AuthService,
+    JwtService,
+    JwtStrategy,
+    SchoolService,
+  ],
 })
 export class AuthModule {}

@@ -40,6 +40,12 @@ export class UserSignUpInput {
 
   @Field()
   userType: UserType;
+
+  @Field({ nullable: true })
+  schoolName: string;
+
+  @Field({ nullable: true })
+  schoolAddress: string;
 }
 @InputType()
 export class LoginInput {
@@ -58,7 +64,7 @@ export class CreateSchoolInput {
   address: string;
 
   @Field()
-  phoneNumber: number;
+  phoneNumber: string;
 
   @Field()
   email: string;
@@ -72,7 +78,7 @@ export class UpdateSchoolInput {
   address: string;
 
   @Field({ nullable: true })
-  phoneNumber: number;
+  phoneNumber: string;
 
   @Field({ nullable: true })
   email: string;

@@ -10,6 +10,8 @@ import { UserService } from './services/user.service';
 import { AuthModule } from 'src/auth/auth.module';
 import { SchoolService } from './services/school.service';
 import { SchoolResolver } from './resolvers/school.resolver';
+import { ClassService } from './services/class.service';
+import { ClassResolver } from './resolvers/class.resolver';
 
 @Module({
   imports: [
@@ -21,6 +23,13 @@ import { SchoolResolver } from './resolvers/school.resolver';
       SmsClassStudent,
     ]),
   ],
-  providers: [UserResolver, UserService, SchoolService, SchoolResolver],
+  providers: [
+    UserResolver,
+    UserService,
+    SchoolService,
+    SchoolResolver,
+    ClassService,
+    ClassResolver,
+  ],
 })
 export class ApiModule {}

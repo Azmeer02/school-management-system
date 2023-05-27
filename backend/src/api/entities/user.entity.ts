@@ -39,6 +39,9 @@ export class SmsUser {
   @Field()
   userType: UserType;
 
+  @Column({ nullable: true })
+  schoolId: number;
+
   @CreateDateColumn({ default: () => 'CURRENT_TIMESTAMP' })
   @Field()
   createdAt: Date;

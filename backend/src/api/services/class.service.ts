@@ -58,7 +58,7 @@ export class ClassService {
     return await this.classRepository.save(smsClass);
   }
 
-  async deleteSchool(id: number): Promise<OperationStatus> {
+  async deleteClass(id: number): Promise<OperationStatus> {
     const smsClass = await this.classRepository.findOne({
       where: { classId: id },
     });

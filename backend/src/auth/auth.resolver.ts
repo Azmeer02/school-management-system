@@ -1,11 +1,19 @@
 /* eslint-disable prettier/prettier */
-import { Resolver, Mutation, Args } from '@nestjs/graphql';
+import { Resolver, Mutation, Args, ResolveField, Root } from '@nestjs/graphql';
 import { LoginInput, LoginOutput, UserSignUpInput } from 'src/api/model';
 import { AuthService } from './auth.service';
+import { SmsSchool } from 'src/api/entities/school.entity';
+import { SmsUser } from 'src/api/entities/user.entity';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 
-@Resolver()
+@Resolver(SmsUser)
 export class AuthResolver {
-  constructor(private authService: AuthService) {}
+  constructor(
+    @InjectRepository(SmsSchool)
+    private schoolRepository: Repository<SmsSchool>,
+    private authService: AuthService,
+  ) {}
 
   @Mutation(() => String)
   async signup(
@@ -26,5 +34,18 @@ export class AuthResolver {
     );
 
     return token;
+  }
+
+  @ResolveField(() => SmsSchool, { nullable: true })
+  async school(@Root() user: SmsUser): Promise<SmsSchool | null> {
+    const schoolId = user.schoolId;
+
+    if (!schoolId) {
+      return null;
+    }
+
+    const school = await this.schoolRepository.findOne({ where: { schoolId } });
+
+    return school;
   }
 }
