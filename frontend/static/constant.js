@@ -1,0 +1,6 @@
+export const USER_TYPE = {
+  STUDENT: "STUDENT",
+  SCHOOL: "SCHOOL",
+  TEACHER: "TEACHER",
+  ADMIN: "ADMIN",
+};

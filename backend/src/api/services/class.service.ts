@@ -15,22 +15,6 @@ export class ClassService {
     private classRepository: Repository<SmsSchoolClass>,
   ) {}
 
-  // async getAllClasses(): Promise<SmsSchoolClass[]> {
-  //   return await this.classRepository.find();
-  // }
-
-  // async getClassById(id: number): Promise<SmsSchoolClass> {
-  //   const smsClass = await this.classRepository.findOne({
-  //     where: { classId: id },
-  //   });
-
-  //   if (!smsClass) {
-  //     throw new Error('Class not found');
-  //   }
-
-  //   return smsClass;
-  // }
-
   async getAllClasses(): Promise<SmsSchoolClass[]> {
     return await this.classRepository.find({ relations: ['school'] });
   }
